@@ -25,144 +25,135 @@
 						</div>
 					</div>
 					<div class="card-body p-4">
-						<div id="page" class="row g-4">
+						<div id="registerPage" class="row g-4">
 							<div class="col-md-12">
-								<div id="registerPage" class="row g-4"></div>
-								<label class="form-label">Full Name <span class="required">*</span></label>
-								<div class="input-group"> <span class="input-group-text">
-            <i class="bi bi-person"></i>
-        </span>
-									<input id="full_name" type="text" class="form-control" placeholder="Enter your full name"> </div>
-								<div class="error" id="e_name"></div>
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Email <span class="required">*</span></label>
-								<div class="input-group"> <span class="input-group-text">
-            <i class="bi bi-envelope"></i>
-        </span>
-									<input id="email" type="email" autocomplete="email" class="form-control" placeholder="Enter your email"> </div>
-								<div class="error" id="e_email"></div>
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Phone Number <span class="required">*</span></label>
-								<div class="input-group"> <span class="input-group-text">
-            <i class="bi bi-telephone"></i>
-        </span>
-									<input id="phone" type="tel" autocomplete="phone" class="form-control" placeholder="Enter your phone number"> </div>
-								<div class="error" id="e_phone"></div>
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Choose Show Timing <span class="required">*</span></label>
-								<select id="timing" class="form-select">
-									<option value="">-- Select Timing --</option>
-									<option value="T03:30 PM">Afternoon 03:30 PM</option>
-									<option value="T07:30 PM">Evening 07:30 PM</option>
-								</select>
-								<div id="availableTickets" class="mt-2 fw-semibold text-success"></div>
-								<div class="error" id="e_timing"></div>
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Ticket Type <span class="required">*</span></label>
-								<select id="ticket" class="form-select">
-									<option value="">-- Select Ticket Type --</option>
-									<option value="standard">Standard - $25 per ticket</option>
-									<option value="vip">VIP - $30 per ticket</option>
-								</select>
-								<div class="error" id="e_ticket"></div>
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Number of Tickets <span class="required">*</span></label>
-								<div class="input-group"> <span class="input-group-text">
-            <i class="bi bi-ticket"></i>
-        </span>
-									<input id="pax" type="number" class="form-control" placeholder="Enter number of tickets"> </div>
-								<div class="error" id="e_pax"></div>
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Promo Code (Optional)</label>
-								<div class="input-group"> <span class="input-group-text">
-            <i class="bi bi-tag"></i>
-        </span>
-									<input id="promo" type="text" class="form-control" placeholder="Enter promo code" oninput="this.value = this.value.toUpperCase();"> </div>
-								<div class="error" id="e_promo"></div>
-							</div>
-							<div class="col-12 text-center mt-4">
-								<button class="btn btn-primary btn-lg px-5 me-2" onclick="validateRegistration()"> Next <i class="bi bi-arrow-right-circle"></i> </button>
+								<div class="row g-4">
+									<label class="form-label">Full Name <span class="required">*</span></label>
+									<div class="input-group"> <span class="input-group-text"><i class="bi bi-person"></i></span>
+										<input id="full_name" type="text" class="form-control" placeholder="Enter your full name"> </div>
+									<div class="error" id="e_name"></div>
+								</div>
+								<div class="col-md-12">
+									<label class="form-label">Email <span class="required">*</span></label>
+									<div class="input-group"> <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+										<input id="email" type="email" autocomplete="email" class="form-control" placeholder="Enter your email"> </div>
+									<div class="error" id="e_email"></div>
+								</div>
+								<div class="col-md-12">
+									<label class="form-label">Phone Number <span class="required">*</span></label>
+									<div class="input-group"> <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+										<input id="phone" type="tel" autocomplete="phone" class="form-control" placeholder="Enter your phone number"> </div>
+									<div class="error" id="e_phone"></div>
+								</div>
+								<div class="col-md-12">
+									<label class="form-label">Choose Show Timing <span class="required">*</span></label>
+									<select id="timing" class="form-select">
+										<option value="">-- Select Timing --</option>
+										<option value="T03:30 PM">Afternoon 03:30 PM</option>
+										<option value="T07:30 PM">Evening 07:30 PM</option>
+									</select>
+									<div id="availableTickets" class="mt-2 fw-semibold text-success"></div>
+									<div class="error" id="e_timing"></div>
+								</div>
+								<div class="col-md-12">
+									<label class="form-label">Ticket Type <span class="required">*</span></label>
+									<select id="ticket" class="form-select">
+										<option value="">-- Select Ticket Type --</option>
+										<option value="standard">Standard - $25 per ticket</option>
+										<option value="vip">VIP - $30 per ticket</option>
+									</select>
+									<div class="error" id="e_ticket"></div>
+								</div>
+								<div class="col-md-12">
+									<label class="form-label">Number of Tickets <span class="required">*</span></label>
+									<div class="input-group"> <span class="input-group-text"><i class="bi bi-ticket"></i></span>
+										<input id="pax" type="number" class="form-control" placeholder="Enter number of tickets"> </div>
+									<div class="error" id="e_pax"></div>
+								</div>
+								<div class="col-md-12">
+									<label class="form-label">Promo Code (Optional)</label>
+									<div class="input-group"> <span class="input-group-text"><i class="bi bi-tag"></i></span>
+										<input id="promo" type="text" class="form-control" placeholder="Enter promo code" oninput="this.value = this.value.toUpperCase();"> </div>
+									<div class="error" id="e_promo"></div>
+								</div>
+								<div class="col-12 text-center mt-4">
+									<button class="btn btn-primary btn-lg px-5 me-2" onclick="validateRegistration()"> Next <i class="bi bi-arrow-right-circle"></i> </button>
+								</div>
 							</div>
 						</div>
-						<div id="paymentPage" class="row g-4"></div>
-						<div class="col-md-12">
-							<table class="table table-bordered align-middle mb-4">
-								<thead class="table-primary">
-									<tr>
-										<th>Description</th>
-										<th>Amount</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Number of Pax</td>
-										<td id="pax"></td>
-									</tr>
-									<tr>
-										<td>Ticket Price</td>
-										<td id="ticketPrice"></td>
-									</tr>
-									<tr>
-										<td>Total Price</td>
-										<td id="totalPrice"></td>
-									</tr>
-									<tr>
-										<td>Discount</td>
-										<td id="discountPrice"></td>
-									</tr>
-									<tr>
-										<td>Final Price</td>
-										<td id="finalPrice"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="col-12" id="paymentSection">
-							<label class="form-label d-block"> Payment Method <span class="required">*</span> </label>
-							<div class="form-check form-check-inline">
-								<input id="paylah_paynow" value="PayLah/PayNow" class="form-check-input custom-radio" type="radio" name="paymentMethod" onclick="changePaymentMethod()">
-								<label class="form-check-label">PayLah / PayNow</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input id="account_transfer" value="Account Transfer" class="form-check-input custom-radio" type="radio" name="paymentMethod" onclick="changePaymentMethod()">
-								<label class="form-check-label">Account Transfer</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input id="uen" value="UEN" class="form-check-input custom-radio" type="radio" name="paymentMethod" onclick="changePaymentMethod()">
-								<label class="form-check-label">PayNow to UEN</label>
-							</div>
-							<div class="error" id="e_paymentMethod"></div>
-							<div id="qrSection" class="border rounded p-3 bg-light"> <img src="qr.png" class="qr-image"> </div>
-							<div id="accountSection" class="border rounded p-3 bg-light">
-								<div id="accountDetails" class="mb-0"> Account Number: 604211672001
-									<br/> Account Name: Svayambhu Fine Arts Pvt.Ltd.
-									<br/> Bank Name: OCBC Bank
-									<br/> Branch: Singapore </div>
-							</div>
-							<div id="uenSection" class="border rounded p-3 bg-light">
-								<div id="uenDetails" class="mb-0"> UEN Number: 202431393E
-									<br/> UEN Name: Svayambhu Fine Arts Pvt.Ltd. </div>
-							</div>
-							<br/>
+						<div id="paymentPage" class="row g-4">
 							<div class="col-md-12">
-								<label class="form-label">Upload payment screenshot <span class="required">*</span></label>
-								<input id="uploadFile" type="file" class="form-control" accept="image/*,.pdf">
-								<div class="error" id="e_file"></div>
+								<table class="table table-bordered align-middle mb-4">
+									<thead class="table-primary">
+										<tr>
+											<th>Description</th>
+											<th>Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Number of Pax</td>
+											<td id="pax"></td>
+										</tr>
+										<tr>
+											<td>Ticket Price</td>
+											<td id="ticketPrice"></td>
+										</tr>
+										<tr>
+											<td>Total Price</td>
+											<td id="totalPrice"></td>
+										</tr>
+										<tr>
+											<td>Discount</td>
+											<td id="discountPrice"></td>
+										</tr>
+										<tr>
+											<td>Final Price</td>
+											<td id="finalPrice"></td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-						</div>
-						<div class="col-12 alert alert-success" id="noPaymentSection" style="display:none;">
-							<h3 class="h5 mb-2">No Payment Required</h3>
-							<p class="mb-0">Your payment amount is $0.00.</p>
-						</div>
-						<div class="col-12 text-center mt-4">
-							<button class="btn btn-primary btn-lg px-5 me-2" onclick="goToRegistrationPage()"> <i class="bi bi-arrow-left-circle"></i> Back </button>
-							<button class="btn btn-primary btn-lg px-5 me-2" onclick="submitForm()"> Submit <i class="bi bi-arrow-right-circle"></i> </button>
+							<div class="col-12" id="paymentSection">
+								<label class="form-label d-block"> Payment Method <span class="required">*</span> </label>
+								<div class="form-check form-check-inline">
+									<input id="paylah_paynow" value="PayLah/PayNow" class="form-check-input custom-radio" type="radio" name="paymentMethod" onclick="changePaymentMethod()">
+									<label class="form-check-label">PayLah / PayNow</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input id="account_transfer" value="Account Transfer" class="form-check-input custom-radio" type="radio" name="paymentMethod" onclick="changePaymentMethod()">
+									<label class="form-check-label">Account Transfer</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input id="uen" value="UEN" class="form-check-input custom-radio" type="radio" name="paymentMethod" onclick="changePaymentMethod()">
+									<label class="form-check-label">PayNow to UEN</label>
+								</div>
+								<div class="error" id="e_paymentMethod"></div>
+								<div id="qrSection" class="border rounded p-3 bg-light"> <img src="qr.png" class="qr-image"> </div>
+								<div id="accountSection" class="border rounded p-3 bg-light">
+									<div id="accountDetails" class="mb-0"> Account Number: 604211672001
+										<br/> Account Name: Svayambhu Fine Arts Pvt.Ltd.
+										<br/> Bank Name: OCBC Bank
+										<br/> Branch: Singapore </div>
+								</div>
+								<div id="uenSection" class="border rounded p-3 bg-light">
+									<div id="uenDetails" class="mb-0"> UEN Number: 202431393E
+										<br/> UEN Name: Svayambhu Fine Arts Pvt.Ltd. </div>
+								</div>
+								<br/>
+								<div class="col-md-12">
+									<label class="form-label">Upload payment screenshot <span class="required">*</span></label>
+									<input id="uploadFile" type="file" class="form-control" accept="image/*,.pdf">
+									<div class="error" id="e_file"></div>
+								</div>
+								<div class="col-12 alert alert-success" id="noPaymentSection" style="display:none;">
+									<h3 class="h5 mb-2">No Payment Required</h3>
+									<p class="mb-0">Your payment amount is $0.00.</p>
+								</div>
+								<div class="col-12 text-center mt-4">
+									<button class="btn btn-primary btn-lg px-5 me-2" onclick="submitForm()"> Submit <i class="bi bi-arrow-right-circle"></i> </button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
