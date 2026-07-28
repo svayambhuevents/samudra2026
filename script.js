@@ -25,6 +25,6 @@ document.getElementById("postBtn").addEventListener("click", async () => {
     console.log(data);
     document.getElementById("postResult").textContent =
         JSON.stringify(data, null, 2);
-  )};
+  })
   .catch(console.error);
 });
