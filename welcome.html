@@ -21,11 +21,11 @@
                   <img src="logo.png" class="img-fluid logo" alt="Organization Logo">
                 </div>
                 <div class="col-lg-10 col-md-9 col-12 text-center text-md-start">
-                  <h2 id="eventName" class="fw-bold text-primary mb-1 event-name"></h2>
+                  <h2 class="fw-bold text-primary mb-1 event-name">Samudra Event Registration</h2>
                   <p class="mb-0 text-muted">
-                    <b>Date:</b><span id="eventDate"></span>
+                    <b>Date:</b> 12 SEP 2026, SATURDAY
                     <br/>
-                    <b>Venue:</b> <span id="eventVenue"></span>
+                    <b>Venue:</b> Alliance Française de Singapour
                   </p>
                 </div>
               </div>
@@ -81,8 +81,8 @@
     <label class="form-label">Ticket Type <span class="required">*</span></label>
     <select id="ticket" class="form-select">
         <option value="">-- Select Ticket Type --</option>
-        <option value="standard"/>
-        <option value="vip"/>
+        <option value="standard">Standard - $25 per ticket</option>
+        <option value="vip">VIP - $30 per ticket</option>
     </select>
     <div class="error" id="e_ticket"></div>
 </div>
@@ -173,15 +173,23 @@
     <div class="error" id="e_paymentMethod"></div>
 
     <div id="qrSection" class="border rounded p-3 bg-light">
-        <img id="qrImage" class="qr-image">
+        <img src="qr.png" class="qr-image">
     </div>
 
     <div id="accountSection" class="border rounded p-3 bg-light">
-        <div id="accountDetails" class="mb-0"></div>
+        <div id="accountDetails" class="mb-0">
+            Account Number: 604211672001 <br/>
+            Account Name: Svayambhu Fine Arts Pvt.Ltd. <br/>
+            Bank Name: OCBC Bank <br/>
+            Branch: Singapore
+        </div>
     </div>
 
     <div id="uenSection" class="border rounded p-3 bg-light">
-        <div id="uenDetails" class="mb-0"></div>
+        <div id="uenDetails" class="mb-0">
+            UEN Number: 202431393E <br/>
+            UEN Name: Svayambhu Fine Arts Pvt.Ltd.
+        </div>
     </div>
 
     <br/>
