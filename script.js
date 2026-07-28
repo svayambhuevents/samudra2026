@@ -6,9 +6,7 @@ const pageContainer = document.getElementById("page");
 const loadingOverlay = document.getElementById("loadingOverlay");
 
 window.onload = () => {
-  console.log('Loading ...');
   document.getElementById("paymentPage").style.display = "none";
-  console.log('Loaded!');
 };
 
 function showLoader() {
@@ -23,6 +21,11 @@ function hideLoader() {
 
 function validateRegistration() {
     document.getElementById("registerPage").style.display = "none";
+    document.getElementById("paymentSection").style.display = "none";
+    document.getElementById("noPaymentSection").style.display = "none";
+    document.getElementById("qrSection").style.display = "none";
+    document.getElementById("accountSection").style.display = "none";
+    document.getElementById("uenSection").style.display = "none";
     document.getElementById("paymentPage").style.display = "block";
   
     showLoader();
