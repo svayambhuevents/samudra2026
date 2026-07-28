@@ -1,8 +1,8 @@
-.body {
+body {
     background: linear-gradient(135deg, #2a2c30, #717579);
     min-height: 100vh;
     font-family: "Segoe UI", sans-serif;
-    padding: 20px 0 20px 0;
+    padding: 20px;
 }
 
 .card {
@@ -96,11 +96,11 @@ textarea {
 }
 
 .bg-success-subtle {
-  padding: 25px;
+    padding: 25px;
 }
 
 .brand-color {
-  color: #620000 !important;
+    color: #620000 !important;
 }
 
 .custom-radio {
