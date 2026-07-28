@@ -39,11 +39,12 @@ const pageContainer = document.getElementById("page");
 const loadingOverlay = document.getElementById("loadingOverlay");
 
 window.onload = () => {
+  document.getElementById("paymentPage").style.display = "none";
 };
 
 function showLoader() {
-    loadingOverlay.classList.remove("d-none");
-    loadingOverlay.classList.add("show");
+  loadingOverlay.classList.remove("d-none");
+  loadingOverlay.classList.add("show");
 }
 
 function hideLoader() {
@@ -52,6 +53,9 @@ function hideLoader() {
 }
 
 function validateRegistration() {
+    document.getElementById("registerPage").style.display = "none";
+    document.getElementById("paymentPage").style.display = "block";
+  
     showLoader();
     formData.name = full_name.value.trim();
     formData.email = email.value.trim();
