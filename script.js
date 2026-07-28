@@ -139,7 +139,7 @@ function submitForm() {
             e_file.innerHTML = "Please select a file.";
             error = true;
         }
-        if (file.size > 1 * 1024 * 1024) {
+        if (file.size > 10 * 1024 * 1024) {
             e_file.innerHTML = "Maximum file size is 10 MB.";
             error = true;
         }
