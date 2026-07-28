@@ -5,7 +5,7 @@ document.getElementById("getBtn").addEventListener("click", async () => {
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      document.getElementById("result").textContent =
+      document.getElementById("getResult").textContent =
         JSON.stringify(data, null, 2);
     })
     .catch(error => console.error(error));
@@ -21,6 +21,10 @@ document.getElementById("postBtn").addEventListener("click", async () => {
     body: formData
   })
   .then(response => response.json())
-  .then(data => console.log(data))
+  .then(data => {
+    console.log(data);
+    document.getElementById("postResult").textContent =
+        JSON.stringify(data, null, 2);
+  )};
   .catch(console.error);
 });
