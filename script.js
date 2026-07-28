@@ -6,7 +6,9 @@ const pageContainer = document.getElementById("page");
 const loadingOverlay = document.getElementById("loadingOverlay");
 
 window.onload = () => {
+  console.log('Loading ...');
   document.getElementById("paymentPage").style.display = "none";
+  console.log('Loaded!');
 };
 
 function showLoader() {
