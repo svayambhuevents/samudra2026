@@ -27,7 +27,7 @@ document.getElementById("getBtn").addEventListener("click", async () => {
         JSON.stringify(data, null, 2);
     })
     .catch(error => console.error(error));
-}
+});
 
 document.getElementById("postBtn").addEventListener("click", async () => {
   const payload = {
