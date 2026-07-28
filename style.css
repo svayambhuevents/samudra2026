@@ -2,7 +2,7 @@
     background: linear-gradient(135deg, #2a2c30, #717579);
     min-height: 100vh;
     font-family: "Segoe UI", sans-serif;
-    padding: 20px;
+    padding: 20px 0 20px 0;
 }
 
 .card {
