@@ -18,14 +18,9 @@ document.getElementById("postBtn").addEventListener("click", async () => {
   
   fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
     body: formData
   })
   .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => console.error(error));
+  .then(data => console.log(data))
+  .catch(console.error);
 });
