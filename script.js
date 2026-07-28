@@ -6,7 +6,7 @@ button.addEventListener("click", () => {
 });
 
 
-const url = "https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxx/exec";
+const url = "https://script.google.com/macros/s/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec";
 
 fetch(url)
   .then(response => response.json())
