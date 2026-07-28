@@ -33,7 +33,10 @@
             <div class="card-body p-4">
               <div id="page" class="row g-4">
                 <div class="col-md-12">
-    <label class="form-label">Full Name <span class="required">*</span></label>
+
+<div id="registerPage" class="row g-4"></div>
+                  
+<label class="form-label">Full Name <span class="required">*</span></label>
     <div class="input-group">
         <span class="input-group-text">
             <i class="bi bi-person"></i>
@@ -111,6 +114,103 @@
         <i class="bi bi-arrow-right-circle"></i>
     </button>
 </div>
+</div>
+
+<div id="paymentPage" class="row g-4"></div>
+
+<div class="col-md-12">
+    <table class="table table-bordered align-middle mb-4">
+        <thead class="table-primary">
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Number of Pax</td>
+                <td id="pax"></td>
+            </tr>
+            <tr>
+                <td>Ticket Price</td>
+                <td id="ticketPrice"></td>
+            </tr>
+            <tr>
+                <td>Total Price</td>
+                <td id="totalPrice"></td>
+            </tr>
+            <tr>
+                <td>Discount</td>
+                <td id="discountPrice"></td>
+            </tr>
+            <tr>
+                <td>Final Price</td>
+                <td id="finalPrice"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-12" id="paymentSection">
+    <label class="form-label d-block">
+        Payment Method <span class="required">*</span>
+    </label>
+    <div class="form-check form-check-inline">
+        <input id="paylah_paynow" value="PayLah/PayNow" class="form-check-input custom-radio" type="radio" name="paymentMethod"
+            onclick="changePaymentMethod()">
+        <label class="form-check-label">PayLah / PayNow</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input id="account_transfer" value="Account Transfer" class="form-check-input custom-radio" type="radio" name="paymentMethod"
+            onclick="changePaymentMethod()">
+        <label class="form-check-label">Account Transfer</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input id="uen" value="UEN" class="form-check-input custom-radio" type="radio" name="paymentMethod"
+            onclick="changePaymentMethod()">
+        <label class="form-check-label">PayNow to UEN</label>
+    </div>
+    <div class="error" id="e_paymentMethod"></div>
+
+    <div id="qrSection" class="border rounded p-3 bg-light">
+        <img id="qrImage" class="qr-image">
+    </div>
+
+    <div id="accountSection" class="border rounded p-3 bg-light">
+        <div id="accountDetails" class="mb-0"></div>
+    </div>
+
+    <div id="uenSection" class="border rounded p-3 bg-light">
+        <div id="uenDetails" class="mb-0"></div>
+    </div>
+
+    <br/>
+
+    <div class="col-md-12">
+        <label class="form-label">Upload payment screenshot <span class="required">*</span></label>
+        <input id="uploadFile" type="file" class="form-control" accept="image/*,.pdf">
+        <div class="error" id="e_file"></div>
+    </div>
+</div>
+
+<div class="col-12" id="noPaymentSection" class="alert alert-success" style="display:none;">
+    <h3 class="h5 mb-2">No Payment Required</h3>
+    <p class="mb-0">Your payment amount is $0.00.</p>
+</div>
+
+<div class="col-12 text-center mt-4">
+    <button class="btn btn-primary btn-lg px-5 me-2" onclick="goToRegistrationPage()">
+        <i class="bi bi-arrow-left-circle"></i>
+        Back
+    </button>
+    <button class="btn btn-primary btn-lg px-5 me-2" onclick="submitForm()">
+        Submit
+        <i class="bi bi-arrow-right-circle"></i>
+    </button>
+</div>
+              </div>
+                
+                
               </div>
             </div>
           </div>
