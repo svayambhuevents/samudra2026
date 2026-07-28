@@ -111,6 +111,8 @@ function changePaymentMethod() {
 }
 
 function submitForm() {
+    showLoader();
+  
     let error = false;
 
     if (!document.getElementById("agree").checked) {
@@ -144,6 +146,7 @@ function submitForm() {
     }
 
     if (error) {
+        hideLoader();
         return;
     }
 
@@ -163,6 +166,7 @@ function submitForm() {
 }
 
 function saveBooking() {
+    showLoader();
     formData.action = "saveRegistration";
     fetch(API_URL, {
         method: "POST",
