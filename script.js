@@ -1,11 +1,3 @@
-// const button = document.getElementById("btn");
-// const message = document.getElementById("message");
-
-// button.addEventListener("click", () => {
-//     message.textContent = "Hello from JavaScript! 🎉";
-// });
-
-
 const API_URL = "https://script.google.com/macros/s/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec";
 
 document.getElementById("loadBtn").addEventListener("click", async () => {
