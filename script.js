@@ -24,7 +24,7 @@ document.getElementById("postBtn").addEventListener("click", async () => {
   .then(data => {
     console.log(data);
     document.getElementById("postResult").textContent =
-        JSON.stringify(data, null, 2);
+      JSON.stringify(data, null, 2);
   })
   .catch(console.error);
 });
