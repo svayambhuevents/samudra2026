@@ -255,23 +255,11 @@ Please contact the organizer at ${state.config.contactNumber || "the organizer"}
 </div>
 `;
             } else {
-                html = `
-<div class="card bg-success-subtle border-success-subtle">
-<h5 class="text-center text-success-emphasis fw-bold">Registration Successful!</h5>
-<div class="card-body">
-<h5 class="card-title text-success-emphasis">Booking ID: ${result.bookingId}</h5>
-<p class="card-text text-success-emphasis">
-Please be informed that a confirmation email containing your tickets will be sent after your payment has been verified.
-<br/>
-<br/>
-<b>Can't find the email?</b>
-<br/>
-Please check Spam, Junk, or Promotions folder.<br/>
-If you have not received the confirmation email within 24 hours, please contact the organizer at ${state.config.contactNumber || "the organizer"} for assistance.
-</p>
-</div>
-</div>
-`;
+                setStyle("paymentBlock", "none")
+                setHtml("bookingId", result.bookingId);
+                setHtml("contactNumber2", result.contactNumber);
+                setStyle("confirmationBlock", "block")
+                hideLoader();
             }
             setHtml("page", html);
             hideLoader();
@@ -283,7 +271,8 @@ If you have not received the confirmation email within 24 hours, please contact 
 
     window.onload = function () {
         showLoader();
-        setStyle("paymentBlock", "none");
-        setStyle("confirmationBlock", "none");
+        document.getElementById("paymentBlock").style.display = "none";
+        document.getElementById("confirmationBlock").style.display = "none";
+        hideLoader();
     };
 })();
