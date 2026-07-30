@@ -168,6 +168,8 @@
 
         state.formData.paymentMethod = "No payment required";
         const method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+        console.log(state.formData.paymentMethod);
+        console.log(method);
 
         if (method === "PayLah/PayNow") {
             setStyle("qrSection", "block");
@@ -179,6 +181,8 @@
             setStyle("uenSection", "block");
             state.formData.paymentMethod = "UEN";
         }
+        console.log(state.formData.paymentMethod);
+
     }
 
     async function submitForm() {
@@ -222,7 +226,7 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (event) {
-                    state.formData.file = e.target.result.split(",")[1];
+                    state.formData.file = event.target.result.split(",")[1];
                     state.formData.filename = file.name;
                     state.formData.mimeType = file.type;
                     saveBooking();
