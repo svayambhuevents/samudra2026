@@ -264,7 +264,6 @@
             setStyle("failureBlock", "block");
             setHtml("failureMessage", html);
         } else {
-            setStyle("paymentBlock", "none")
             setHtml("bookingId", result.bookingId);
             setStyle("confirmationBlock", "block");
         }
