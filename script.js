@@ -29,7 +29,7 @@
     const formatCurrency = (value) => `$${Number(value || 0).toFixed(2)}`;
     const buildDetailsHtml = (lines = []) => lines.join("<br>");
 
-    const API_URL = "https://script.google.com/macros/s/";
+    const API_URL = "https://script.google.com/macros/s";
 
     function showLoader() {
         if (!loadingOverlay) return;
