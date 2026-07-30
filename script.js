@@ -227,6 +227,11 @@
                 reader.readAsDataURL(file);
             }
 
+            state.formData = {
+                ...state.formData,
+                action: "saveRegistration"
+            }
+
             const response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(state.formData)
