@@ -229,13 +229,60 @@
                     state.formData.file = event.target.result.split(",")[1];
                     state.formData.filename = file.name;
                     state.formData.mimeType = file.type;
-                    saveBooking();
+                    state.formData = {
+                        ...state.formData,
+                        action: "saveRegistration"
+                    }
+
+                    console.log(state.formData);
+                    const response = fetch(url, {
+                        method: "POST",
+                        body: JSON.stringify(state.formData)
+                    });
+                    const result = response.json();
+                    console.log(result);
+
+                    if (result.errors !== undefined) {
+                        let html = '<ul style="color:red">';
+                        Object.values(result.errors).forEach((message) => {
+                            html += `<li>${message}</li>`;
+                        });
+                        html += "</ul>";
+                        setStyle("failureBlock", "block");
+                        setHtml("failureMessage", html);
+                    } else {
+                        setHtml("bookingId", result.bookingId);
+                        setStyle("confirmationBlock", "block");
+                    }
                 };
                 reader.readAsDataURL(file);
             } else {
-                saveBooking();
-            }
+                state.formData = {
+                    ...state.formData,
+                    action: "saveRegistration"
+                }
 
+                console.log(state.formData);
+                const response = fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(state.formData)
+                });
+                const result = response.json();
+                console.log(result);
+
+                if (result.errors !== undefined) {
+                    let html = '<ul style="color:red">';
+                    Object.values(result.errors).forEach((message) => {
+                        html += `<li>${message}</li>`;
+                    });
+                    html += "</ul>";
+                    setStyle("failureBlock", "block");
+                    setHtml("failureMessage", html);
+                } else {
+                    setHtml("bookingId", result.bookingId);
+                    setStyle("confirmationBlock", "block");
+                }
+            }
             hideLoader();
         } catch (err) {
            console.error(err);
@@ -246,31 +293,7 @@
     getElement("submitButton").addEventListener("click", submitForm);
 
     function saveBooking() {
-        state.formData = {
-            ...state.formData,
-            action: "saveRegistration"
-        }
 
-        console.log(state.formData);
-        const response = fetch(url, {
-            method: "POST",
-            body: JSON.stringify(state.formData)
-        });
-        const result = response.json();
-        console.log(result);
-
-        if (result.errors !== undefined) {
-            let html = '<ul style="color:red">';
-            Object.values(result.errors).forEach((message) => {
-                html += `<li>${message}</li>`;
-            });
-            html += "</ul>";
-            setStyle("failureBlock", "block");
-            setHtml("failureMessage", html);
-        } else {
-            setHtml("bookingId", result.bookingId);
-            setStyle("confirmationBlock", "block");
-        }
     }
 
     window.onload = function () {
