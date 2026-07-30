@@ -62,7 +62,7 @@
         });
     }
 
-    async function validateRegistration() {
+    document.getElementById("validate_registration").addEventListener("click", async () => {
         try {
             showLoader();
             state.formData = {
@@ -155,7 +155,7 @@
         } catch (err) {
            console.error(err);
         }
-    }
+    });
 
     function changePaymentMethod() {
         ["qrSection", "accountSection", "uenSection"].forEach((i) => {
@@ -244,13 +244,13 @@
                 });
                 errorMessageHtml += "</ul>";
                 setStyle("paymentBlock", "none")
-                setHtml("contactNumber3", result.contactNumber);
+                setHtml("contactNumber2", result.contactNumber);
                 setStyle("failureBlock", "block");
                 setHtml("failureMessage", html);
             } else {
                 setStyle("paymentBlock", "none")
                 setHtml("bookingId", result.bookingId);
-                setHtml("contactNumber2", result.contactNumber);
+                setHtml("contactNumber3", result.contactNumber);
                 setStyle("confirmationBlock", "block");
             }
             hideLoader();
