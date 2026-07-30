@@ -243,25 +243,16 @@
                     errorMessageHtml += `<li>${message}</li>`;
                 });
                 errorMessageHtml += "</ul>";
-                html = `
-<div class="card bg-danger-subtle border-danger-subtle">
-<h5 class="text-center text-danger-emphasis fw-bold">Registration Failed</h5>
-<div class="card-body">
-<div>${errorMessageHtml}</div>
-<p class="card-text text-danger-emphasis">
-Please contact the organizer at ${state.config.contactNumber || "the organizer"} for assistance.
-</p>
-</div>
-</div>
-`;
+                setStyle("paymentBlock", "none")
+                setHtml("contactNumber3", result.contactNumber);
+                setStyle("failureBlock", "block");
+                setHtml("failureMessage", html);
             } else {
                 setStyle("paymentBlock", "none")
                 setHtml("bookingId", result.bookingId);
                 setHtml("contactNumber2", result.contactNumber);
-                setStyle("confirmationBlock", "block")
-                hideLoader();
+                setStyle("confirmationBlock", "block");
             }
-            setHtml("page", html);
             hideLoader();
         } catch (err) {
            console.error(err);
@@ -273,6 +264,7 @@ Please contact the organizer at ${state.config.contactNumber || "the organizer"}
         showLoader();
         document.getElementById("paymentBlock").style.display = "none";
         document.getElementById("confirmationBlock").style.display = "none";
+        document.getElementById("failureBlock").style.display = "none";
         hideLoader();
     };
 })();
