@@ -73,7 +73,7 @@
                 phone: getElement("phone")?.value.trim() || "",
                 timing: getElement("timing")?.value || "",
                 ticket: getElement("ticket")?.value || "",
-                pax: getElement("paxNum")?.value || "",
+                paxNum: getElement("paxNum")?.value || "",
                 promo: getElement("promo")?.value.trim() || ""
             };
         
