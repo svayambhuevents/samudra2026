@@ -177,7 +177,7 @@
         }
     }
 
-    function submitForm() {
+    async function submitForm() {
         try {
             showLoader();
     
@@ -212,38 +212,31 @@
 
             if (error) return;
 
+            setStyle("paymentBlock", "none")
+
+            state.formData.file = "";
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (event) {
                     state.formData.file = event.target.result;
                     state.formData.filename = file.name;
                     state.formData.mimeType = file.type;
-                    await saveBooking();
                 };
                 reader.readAsDataURL(file);
-            } else {
-                state.formData.file = "";
-                await saveBooking();
             }
-        } catch (err) {
-           console.error(err);
-        }
-    }
 
-    async function saveBooking() {
-        try {
+
             const response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(state.formData)
             });
             const result = await response.json();
             if (result.errors !== undefined) {
-                let errorMessageHtml = '<ul style="color:red">';
+                let html = '<ul style="color:red">';
                 Object.values(result.errors).forEach((message) => {
-                    errorMessageHtml += `<li>${message}</li>`;
+                    html += `<li>${message}</li>`;
                 });
-                errorMessageHtml += "</ul>";
-                setStyle("paymentBlock", "none")
+                html += "</ul>";
                 setHtml("contactNumber2", result.contactNumber);
                 setStyle("failureBlock", "block");
                 setHtml("failureMessage", html);
@@ -256,15 +249,15 @@
             hideLoader();
         } catch (err) {
            console.error(err);
-           hideLoader();
+            hideLoader();
         }
     }
 
     window.onload = function () {
         showLoader();
-        document.getElementById("paymentBlock").style.display = "none";
-        document.getElementById("confirmationBlock").style.display = "none";
-        document.getElementById("failureBlock").style.display = "none";
+        ["paymentBlock", "confirmationBlock", "failureBlock"].forEach((i) => {
+            setStyle(i, "none");
+        });
         hideLoader();
     };
 })();
