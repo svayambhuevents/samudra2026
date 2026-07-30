@@ -28,7 +28,7 @@
     };
     const buildDetailsHtml = (lines = []) => lines.join("<br>");
 
-    const API_URL = "https://script.google.com/macros/s";
+    const url = `https://script.google.com/macros/s/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec`;
 
     function showLoader() {
         if (!loadingOverlay) return;
@@ -79,8 +79,6 @@
             document.querySelectorAll(".error").forEach((element) => {
                 element.innerHTML = "";
             });
-
-            const url = `${API_URL}/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec`;
 
             console.log(state.formData);
             const response = await fetch(url, {
