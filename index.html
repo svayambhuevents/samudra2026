@@ -15,18 +15,18 @@
 	<div class="row justify-content-center">
 		<div class="col-xl-8 col-lg-9 col-md-10">
 			<div class="card shadow-lg border-0 rounded-4">
-				<div class="banner"> <img src="banner.png" alt="Banner" class="img-fluid w-100"> </div>
+				<div class="banner"> <img id="eventBanner" alt="Banner" class="img-fluid w-100"> </div>
 				<div class="container py-4">
 					<div class="card-body">
 						<div class="row align-items-center">
-							<div class="col-lg-2 col-md-3 col-12 text-center mb-3 mb-md-0"> <img src="logo.png"
+							<div class="col-lg-2 col-md-3 col-12 text-center mb-3 mb-md-0"> <img id="eventLogo"
 									class="img-fluid logo" alt="Organization Logo"> </div>
 							<div class="col-lg-10 col-md-9 col-12 text-center text-md-start">
-								<h2 class="fw-bold text-primary mb-10">
-									<span class="brand-color">Samudra Event Registration</span>
-								</h2>
-								<p class="mb-0"> <b>Date:</b> 12 SEP 2026, SATURDAY
-									<br /> <b>Venue:</b> Alliance Française de Singapour
+								<h2 id="eventName" class="fw-bold text-primary mb-1 event-name"></h2>
+								<p class="mb-0 text-muted">
+									<b>Date:</b><span id="eventDate"></span>
+									<br />
+									<b>Venue:</b> <span id="eventVenue"></span>
 								</p>
 							</div>
 						</div>
@@ -39,7 +39,7 @@
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-person"></i></span>
 									<input id="full_name" type="text" class="form-control"
-										placeholder="Enter your full name">
+										placeholder="Enter your full name" value="Karthick Sundaram">
 								</div>
 								<div class="error" id="e_name"></div>
 							</div>
@@ -48,7 +48,7 @@
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-envelope"></i></span>
 									<input id="email" type="email" autocomplete="email" class="form-control"
-										placeholder="Enter your email">
+										placeholder="Enter your email" value="karthick.sundaram@hotmail.com">
 								</div>
 								<div class="error" id="e_email"></div>
 							</div>
@@ -58,7 +58,7 @@
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-telephone"></i></span>
 									<input id="phone" type="tel" autocomplete="phone" class="form-control"
-										placeholder="Enter your phone number">
+										placeholder="Enter your phone number" value="12345678">
 								</div>
 								<div class="error" id="e_phone"></div>
 							</div>
@@ -67,7 +67,7 @@
 										class="required">*</span></label>
 								<select id="timing" class="form-select">
 									<option value="">-- Select Timing --</option>
-									<option value="T03:30 PM">Afternoon 03:30 PM</option>
+									<option value="T03:30 PM" selected>Afternoon 03:30 PM</option>
 									<option value="T07:30 PM">Evening 07:30 PM</option>
 								</select>
 								<div id="availableTickets" class="mt-2 fw-semibold text-success"></div>
@@ -78,18 +78,18 @@
 										class="required">*</span></label>
 								<select id="ticket" class="form-select">
 									<option value="">-- Select Ticket Type --</option>
-									<option value="standard">Standard - $25 per ticket</option>
-									<option value="vip">VIP - $30 per ticket</option>
+									<option value="standard" selected>Standard</option>
+									<option value="vip">VIP</option>
 								</select>
 								<div class="error" id="e_ticket"></div>
 							</div>
 							<div class="col-md-12">
-								<label for="paxNum" class="form-label">Number of Tickets <span
+								<label for="pax" class="form-label">Number of Tickets <span
 										class="required">*</span></label>
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-ticket"></i></span>
-									<input id="paxNum" type="number" class="form-control"
-										placeholder="Enter number of tickets">
+									<input id="pax" type="number" class="form-control"
+										placeholder="Enter number of tickets" value="1">
 								</div>
 								<div class="error" id="e_pax"></div>
 							</div>
@@ -103,7 +103,7 @@
 								<div class="error" id="e_promo"></div>
 							</div>
 							<div class="col-12 text-center mt-4">
-								<button class="btn btn-primary btn-lg px-5 me-2" id="validate_registration">
+								<button class="btn btn-primary btn-lg px-5 me-2" onclick="validateRegistration()">
 									Next <i class="bi bi-arrow-right-circle"></i> </button>
 							</div>
 						</div>
@@ -161,21 +161,21 @@
 										name="paymentMethod" onclick="changePaymentMethod()">
 								</div>
 								<div class="error" id="e_paymentMethod"></div>
-								<div id="qrSection" class="border rounded p-3 bg-light"> <img src="qr.png"
-										class="qr-image"> </div>
+
+								<div id="qrSection" class="border rounded p-3 bg-light">
+									<img id="qrImage" class="qr-image">
+								</div>
+
 								<div id="accountSection" class="border rounded p-3 bg-light">
-									<div id="accountDetails" class="mb-0"> Account Number: 604211672001
-										<br /> Account Name: Svayambhu Fine Arts Pvt.Ltd.
-										<br /> Bank Name: OCBC Bank
-										<br /> Branch: Singapore
-									</div>
+									<div id="accountDetails" class="mb-0"></div>
 								</div>
+
 								<div id="uenSection" class="border rounded p-3 bg-light">
-									<div id="uenDetails" class="mb-0"> UEN Number: 202431393E
-										<br /> UEN Name: Svayambhu Fine Arts Pvt.Ltd.
-									</div>
+									<div id="uenDetails" class="mb-0"></div>
 								</div>
+
 								<br />
+
 								<div class="col-md-12">
 									<label for="uploadFile" class="form-label">Upload payment screenshot <span
 											class="required">*</span></label>
@@ -195,17 +195,17 @@
 									<label for="agree">
 										I confirm that I have read the Disclaimer. <span class="required">*</span>
 									</label>
+									<div class="error" id="e_agree"></div>
 								</div>
 								<div id="terms" class="alert alert-warning">
 									<b>Disclaimer:</b>
 									<div id="disclaimer">
 										Please do not attempt to rebook in the event of any booking issues.<br />
-										Instead, contact the organizer at <span id="contactNumber1"></span> for
+										Instead, contact the organizer at <span class="contactNumber"></span> for
 										assistance.
 									</div>
 								</div>
 							</div>
-							<div class="error" id="e_agree"></div>
 							<div class="col-12 text-center mt-4">
 								<button class="btn btn-primary btn-lg px-5 me-2" onclick="submitForm()"> Submit
 									<i class="bi bi-arrow-right-circle"></i> </button>
@@ -216,7 +216,8 @@
 								<h5 class="text-center text-success-emphasis fw-bold">Registration Successful!</h5>
 								<div class="card-body">
 									<h5 class="card-title text-success-emphasis">Booking ID: <span
-											id="bookingId"></span></h5>
+											id="bookingId"></span>
+									</h5>
 									<p class="card-text text-success-emphasis">
 										Please be informed that a confirmation email containing your tickets will be
 										sent after your payment has been verified.
@@ -226,18 +227,19 @@
 										<br />
 										Please check Spam, Junk, or Promotions folder.<br />
 										If you have not received the confirmation email within 24 hours, please contact
-										the organizer at <span id="contactNumber2"></span> for assistance.
+										the organizer at <span class="contactNumber"></span> for assistance.
 								</div>
 							</div>
 						</div>
-						<div id="errorBlock" class="row g-4">
+						<div id="failureBlock" class="row g-4">
 							<div class="card bg-danger-subtle border-danger-subtle">
 								<h5 class="text-center text-danger-emphasis fw-bold">Registration Failed</h5>
 								<div class="card-body">
-									<div id="errorMessage"></div>
+									<div id="failureMessage"></div>
 									<p class="card-text text-danger-emphasis">
-								      Please contact the organizer at <span id="contactNumber3"></span> for assistance.
-								    </p>
+										Please contact the organizer at <span class="contactNumber"></span> for
+										assistance.
+									</p>
 								</div>
 							</div>
 						</div>
