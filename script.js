@@ -158,11 +158,11 @@
                 "disclaimer",
                 `Please do not attempt to rebook in the event of any booking issues.<br/> Instead, contact the organizer at ${state.config.contactNumber || "the organizer"} for assistance.`
             );
-            console.log('am here 8');
-
 
             changePaymentMethod();
-            console.log('am here 9');
+
+            setStyle("registerationBlock", "none");
+            setStyle("paymentBlock", "block");
 
             hideLoader();
         } catch (err) {
