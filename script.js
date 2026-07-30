@@ -96,10 +96,10 @@
                     setHtml("e_" + key, value);
                 });
                 hideLoader();
-                console.log('am here 1');
+                console.log('am here 111');
                 return;
             }
-            console.log('am here 1');
+            console.log('am here 222');
             state.formData.price = result.price;
 
             ["paymentSection", "noPaymentSection", "qrSection", "accountSection", "uenSection"].forEach((i) => {
