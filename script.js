@@ -82,6 +82,8 @@
             });
 
             const url = `${API_URL}/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec`;
+
+            console.log(state.formData);
             const response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(state.formData)
@@ -236,6 +238,7 @@
                 action: "saveRegistration"
             }
 
+            console.log(state.formData);
             const response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(state.formData)
