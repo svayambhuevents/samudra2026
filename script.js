@@ -222,7 +222,7 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (event) {
-                    state.formData.file = event.target.result;
+                    state.formData.file = e.target.result.split(",")[1];
                     state.formData.filename = file.name;
                     state.formData.mimeType = file.type;
                     saveBooking();
@@ -248,11 +248,11 @@
         }
 
         console.log(state.formData);
-        const response = await fetch(url, {
+        const response = fetch(url, {
             method: "POST",
             body: JSON.stringify(state.formData)
         });
-        const result = await response.json();
+        const result = response.json();
         console.log(result);
 
         if (result.errors !== undefined) {
