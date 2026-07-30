@@ -8,6 +8,7 @@ const loadingOverlay = document.getElementById("loadingOverlay");
 window.onload = () => {
   document.getElementById("paymentBlock").style.display = "none";
   document.getElementById("confirmationBlock").style.display = "none";
+  document.getElementById("errorBlock").style.display = "none";
 };
 
 function showLoader() {
