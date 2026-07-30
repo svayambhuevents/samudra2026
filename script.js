@@ -271,4 +271,6 @@
         });
         hideLoader();
     };
+
+    window.changePaymentMethod = changePaymentMethod;
 })();
