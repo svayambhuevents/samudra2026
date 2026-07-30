@@ -183,7 +183,7 @@ function saveBooking() {
         } else {
             let errorMessageHtml = '<ul style="color:red">';
             for (let key in result.errors) {
-              errorMessageHtml += `<li>${result.errors[key]}</li>`;
+                errorMessageHtml += `<li>${result.errors[key]}</li>`;
             }
             errorMessageHtml += '</ul>';
             document.getElementById("errorMessage").innerHTML = errorMessageHtml;
