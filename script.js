@@ -110,44 +110,60 @@
             setText("finalPrice", "$" + state.formData.price.finalPrice.toFixed(2));
             getElement("uploadFile").value = state.formData.file || "";
             setHtml("contactNumber1", result.contactNumber);
+            console.log('am here 1');
 
             const uploadFile = getElement("uploadFile");
             if (uploadFile) {
                 uploadFile.value = state.formData.file || "";
             }
+            console.log('am here 2');
+
 
             if (Number(state.formData.price.finalPrice) === 0) {
                 setStyle("noPaymentSection", "block");
             } else {
                 setStyle("paymentSection", "block");
             }
+            console.log('am here 3');
+
 
             setHtml("accountSection", buildDetailsHtml(state.config.accountDetails || []));
             setHtml("uenSection", buildDetailsHtml(state.config.uenDetails || []));
+
+            console.log('am here 4');
 
             const qrImage = getElement("qrImage");
             if (qrImage) {
                 qrImage.src = state.config.qrImage || "";
             }
 
+            console.log('am here 5');
+
             const paymentRadios = {
                 "PayLah/PayNow": getElement("paylah_paynow"),
                 "Account Transfer": getElement("account_transfer"),
                 UEN: getElement("uen")
             };
+            console.log('am here 6');
 
             Object.entries(paymentRadios).forEach(([method, element]) => {
                 if (element) {
                     element.checked = state.formData.paymentMethod === method;
                 }
             });
+            console.log('am here 7');
+
 
             setHtml(
                 "disclaimer",
                 `Please do not attempt to rebook in the event of any booking issues.<br/> Instead, contact the organizer at ${state.config.contactNumber || "the organizer"} for assistance.`
             );
+            console.log('am here 8');
+
 
             changePaymentMethod();
+            console.log('am here 9');
+
             hideLoader();
         } catch (err) {
            console.error(err);
