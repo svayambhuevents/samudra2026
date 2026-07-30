@@ -26,7 +26,6 @@
             element.style.display = value;
         }
     };
-    const formatCurrency = (value) => `$${Number(value || 0).toFixed(2)}`;
     const buildDetailsHtml = (lines = []) => lines.join("<br>");
 
     const API_URL = "https://script.google.com/macros/s";
@@ -111,12 +110,6 @@
             setText("finalPrice", "$" + state.formData.price.finalPrice.toFixed(2));
             getElement("uploadFile").value = state.formData.file || "";
             setHtml("contactNumber1", result.contactNumber);
-
-            setText("noOfPax", state.formData.pax || "");
-            setText("ticketPrice", formatCurrency(state.formData.price.ticketPrice));
-            setText("totalPrice", formatCurrency(state.formData.price.totalPrice));
-            setText("discountPrice", formatCurrency(state.formData.price.discountPrice));
-            setText("finalPrice", formatCurrency(state.formData.price.finalPrice));
 
             const uploadFile = getElement("uploadFile");
             if (uploadFile) {
