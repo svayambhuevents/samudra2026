@@ -62,7 +62,7 @@
         });
     }
 
-    document.getElementById("validate_registration").addEventListener("click", async () => {
+    async function validateRegistration() {
         try {
             showLoader();
             state.formData = {
@@ -155,7 +155,7 @@
         } catch (err) {
            console.error(err);
         }
-    });
+    }
 
     function changePaymentMethod() {
         ["qrSection", "accountSection", "uenSection"].forEach((i) => {
@@ -177,7 +177,7 @@
         }
     }
 
-    async function submitForm() {
+    function submitForm() {
         try {
             showLoader();
     
