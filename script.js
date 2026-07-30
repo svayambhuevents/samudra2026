@@ -121,9 +121,9 @@
                 uploadFile.value = state.formData.file || "";
             }
 
-            if (Number(price.finalPrice) > 0) {
+            if (Number(state.formData.price.finalPrice) > 0) {
                 setStyle("paymentSection", "block");
-            } else if (Number(price.finalPrice) === 0) {
+            } else {
                 setStyle("noPaymentSection", "block");
             }
 
