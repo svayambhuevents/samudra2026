@@ -96,10 +96,8 @@
                     setHtml("e_" + key, value);
                 });
                 hideLoader();
-                console.log('am here 111');
                 return;
             }
-            console.log('am here 222');
             state.formData.price = result.price;
 
             ["paymentSection", "noPaymentSection", "qrSection", "accountSection", "uenSection"].forEach((i) => {
@@ -114,7 +112,7 @@
             getElement("uploadFile").value = state.formData.file || "";
             setHtml("contactNumber1", result.contactNumber);
 
-            setText("pax", state.formData.pax || "");
+            setText("noOfPax", state.formData.pax || "");
             setText("ticketPrice", formatCurrency(state.formData.price.ticketPrice));
             setText("totalPrice", formatCurrency(state.formData.price.totalPrice));
             setText("discountPrice", formatCurrency(state.formData.price.discountPrice));
