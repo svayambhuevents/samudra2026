@@ -58,7 +58,8 @@
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-telephone"></i></span>
 									<input id="phone" type="tel" autocomplete="phone" class="form-control"
-										placeholder="Enter your phone number">
+										placeholder="Enter your phone number" inputmode="numeric" pattern="[0-9]*"
+										oninput="this.value = this.value.replace(/[^0-9]/g, '')">
 								</div>
 								<div class="error" id="e_phone"></div>
 							</div>
