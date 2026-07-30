@@ -1,196 +1,303 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec";
+(() => {
+    let formData = {};
+    let contactNumber = "";
 
-let formData = {};
-let config = {};
-const pageContainer = document.getElementById("page");
-const loadingOverlay = document.getElementById("loadingOverlay");
+    const getElement = (id) => document.getElementById(id);
 
-window.onload = () => {
-  document.getElementById("paymentBlock").style.display = "none";
-  document.getElementById("confirmationBlock").style.display = "none";
-  document.getElementById("errorBlock").style.display = "none";
-};
+    const loadingOverlay = getElement("loadingOverlay");
 
-function showLoader() {
-  loadingOverlay.classList.remove("d-none");
-  loadingOverlay.classList.add("show");
-}
+    const setText = (id, value) => {
+        const element = getElement(id);
+        if (element) {
+            element.textContent = value;
+        }
+    };
+    const setHtml = (id, value) => {
+        const element = getElement(id);
+        if (element) {
+            element.innerHTML = value;
+        }
+    };
+    const setStyle = (id, value) => {
+        const element = getElement(id);
+        if (element) {
+            element.style.display = value;
+        }
+    };
+    const formatCurrency = (value) => `$${Number(value || 0).toFixed(2)}`;
+    const buildDetailsHtml = (lines = []) => lines.join("<br>");
 
-function hideLoader() {
-    loadingOverlay.classList.remove("show");
-    loadingOverlay.classList.add("d-none");
-}
+    const url = `https://script.google.com/macros/s/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec`;
 
-document.getElementById("validate_registration").addEventListener("click", async () => {
-    showLoader();
-    document.getElementById("paymentSection").style.display = "none";
-    document.getElementById("noPaymentSection").style.display = "none";
-    document.getElementById("qrSection").style.display = "none";
-    document.getElementById("accountSection").style.display = "none";
-    document.getElementById("uenSection").style.display = "none";
-    document.querySelectorAll(".error").forEach(e => e.innerHTML = "");
-    
-    formData.action = "validateRegistration";
-    formData.name = document.getElementById("full_name").value.trim();
-    formData.email = document.getElementById("email").value.trim();
-    formData.phone = document.getElementById("phone").value.trim();
-    formData.timing = document.getElementById("timing").value;
-    formData.ticket = document.getElementById("ticket").value;
-    formData.paxNum = Number(document.getElementById("paxNum").value);
-    formData.promo = document.getElementById("promo").value.trim();
-    document.querySelectorAll(".error").forEach(e => e.innerHTML = "");
+    function showLoader() {
+        if (!loadingOverlay) return;
+        loadingOverlay.classList.remove("d-none");
+        loadingOverlay.classList.add("show");
+    }
 
-    fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.errors !== undefined && Object.keys(result.errors).length > 0) {
-            for (let key in result.errors) {
-                let el = document.getElementById("e_" + key);
-                if (el) el.innerHTML = result.errors[key];
+    function hideLoader() {
+        if (!loadingOverlay) return;
+        loadingOverlay.classList.remove("show");
+        loadingOverlay.classList.add("d-none");
+    }
+
+    function populateRegistrationFields() {
+        const registrationFields = {
+            full_name: formData.name || "",
+            email: formData.email || "",
+            phone: formData.phone || "",
+            timing: formData.timing || "",
+            ticket: formData.ticket || "",
+            pax: formData.pax || "",
+            promo: formData.promo || ""
+        };
+
+        Object.entries(registrationFields).forEach(([id, value]) => {
+            const element = getElement(id);
+            if (element) {
+                element.value = value;
             }
-            hideLoader();
-        } else {
+        });
+    }
+
+    async function validateRegistration() {
+        try {
+            showLoader();
+
+            document.querySelectorAll(".error").forEach((element) => {
+                element.innerHTML = "";
+            });
+
+            formData = {
+                ...formData,
+                action: "validateRegistration",
+                name: getElement("full_name")?.value.trim() || "",
+                email: getElement("email")?.value.trim() || "",
+                phone: getElement("phone")?.value.trim() || "",
+                timing: getElement("timing")?.value || "",
+                ticket: getElement("ticket")?.value || "",
+                pax: getElement("pax")?.value || "",
+                promo: getElement("promo")?.value.trim() || ""
+            };
+        
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(formData)
+            });
+            const result = await response.json();
+            
+            if (result.errors !== undefined) {
+                Object.entries(result.errors).forEach(([key, value]) => {
+                    setHtml("e_" + key, value);
+                });
+                hideLoader();
+                return;
+            }
             formData.price = result.price;
-            document.getElementById("noOfPax").textContent = formData.paxNum;
-            document.getElementById("ticketPrice").textContent = "$" + formData.price.ticketPrice.toFixed(2);
-            document.getElementById("totalPrice").textContent = "$" + formData.price.totalPrice.toFixed(2);
-            document.getElementById("discountPrice").textContent = "$" + formData.price.discountPrice.toFixed(2);
-            document.getElementById("finalPrice").textContent = "$" + formData.price.finalPrice.toFixed(2);
-            document.getElementById("uploadFile").value = formData.file || "";
-            document.getElementById("paymentSection").style.display = "none";
-            document.getElementById("noPaymentSection").style.display = "none";
-            document.getElementById("qrSection").style.display = "none";
-            document.getElementById("accountSection").style.display = "none";
-            document.getElementById("uenSection").style.display = "none";
-            document.getElementById("contactNumber1").innerHTML = result.contactNumber;
+
+            ["paymentSection", "noPaymentSection", "qrSection", "accountSection", "uenSection"].forEach((i) => {
+                setStyle(i, "none");
+            });
+
+            setText("noOfPax", formData.pax);
+            setText("ticketPrice", "$" + formatCurrency(formData.price.ticketPrice));
+            setText("totalPrice", "$" + formatCurrency(formData.price.totalPrice));
+            setText("discountPrice", "$" + formatCurrency(formData.price.discountPrice));
+            setText("finalPrice", "$" + formatCurrency(formData.price.finalPrice));
+            getElement("uploadFile").value = formData.file || "";
+
+            const uploadFile = getElement("uploadFile");
+            if (uploadFile) {
+                uploadFile.value = formData.file || "";
+            }
 
             if (Number(formData.price.finalPrice) === 0) {
-                document.getElementById("noPaymentSection").style.display = "block";
+                setStyle("noPaymentSection", "block");
             } else {
-                document.getElementById("paymentSection").style.display = "block";
-            }
-            
-            if (formData.paymentMethod === 'PayLah/PayNow') {
-                document.getElementById("paylah_paynow").checked = true;
-            } else if (formData.paymentMethod === 'Account Transfer') {
-                document.getElementById("account_transfer").checked = true;
-            } else if (formData.paymentMethod === 'UEN') {
-                document.getElementById("uen").checked = true;
+                setStyle("paymentSection", "block");
             }
 
-            changePaymentMethod();
+            const paymentRadios = {
+                "PayLah/PayNow": getElement("paylah_paynow"),
+                "Account Transfer": getElement("account_transfer"),
+                UEN: getElement("uen")
+            };
+
+            Object.entries(paymentRadios).forEach(([method, element]) => {
+                if (element) {
+                    element.checked = formData.paymentMethod === method;
+                }
+            });
+
+            await changePaymentMethod();
+
+            setStyle("registerationBlock", "none");
+            setStyle("paymentBlock", "block");
 
             hideLoader();
-
-            document.getElementById("registerationBlock").style.display = "none";
-            document.getElementById("paymentBlock").style.display = "block";
-        }
-    })
-    .catch(console.error);
-});
-
-function changePaymentMethod() {
-    document.getElementById("qrSection").style.display = "none";
-    document.getElementById("accountSection").style.display = "none";
-    document.getElementById("uenSection").style.display = "none";
-    formData.paymentMethod = 'No payment required';
-
-    const method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-    if (method === "PayLah/PayNow") {
-        document.getElementById("qrSection").style.display = "block";
-        formData.paymentMethod = 'PayLah/PayNow';
-    } else if (method === "Account Transfer") {
-        document.getElementById("accountSection").style.display = "block";
-        formData.paymentMethod = 'Account Transfer';
-    } else if (method === "UEN") {
-        document.getElementById("uenSection").style.display = "block";
-        formData.paymentMethod = 'UEN';
-    }
-}
-
-function submitForm() {
-    showLoader();
-  
-    let error = false;
-
-    if (!document.getElementById("agree").checked) {
-        e_agree.innerHTML = "Please read and agree to the disclaimer before submitting.";
-        error = true;
-    }
-
-    let file = null;
-    if (Number(formData.price.finalPrice) > 0) {
-        const e_paymentMethod = document.getElementById("e_paymentMethod");
-        const e_file = document.getElementById("e_file");
-
-        e_paymentMethod.innerHTML = "";
-        e_file.innerHTML = "";
-
-        let method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-        file = document.getElementById("uploadFile").files[0];
-
-        if (!method) {
-            e_paymentMethod.innerHTML = "Please select payment method";
-            error = true;
-        }
-        if (!file) {
-            e_file.innerHTML = "Please select a file.";
-            error = true;
-        }
-        if (file && file.size > 1 * 1024 * 1024) {
-            e_file.innerHTML = "Maximum file size is 10 MB.";
-            error = true;
+        } catch (err) {
+           console.error(err);
         }
     }
 
-    if (error) {
-        hideLoader();
-        return;
+    async function changePaymentMethod() {
+        ["qrSection", "accountSection", "uenSection"].forEach((i) => {
+            setStyle(i, "none");
+        });
+
+        formData.paymentMethod = "No payment required";
+        const method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+
+        if (method === "PayLah/PayNow") {
+            setStyle("qrSection", "block");
+            formData.paymentMethod = "PayLah/PayNow";
+        } else if (method === "Account Transfer") {
+            setStyle("accountSection", "block");
+            formData.paymentMethod = "Account Transfer";
+        } else if (method === "UEN") {
+            setStyle("uenSection", "block");
+            formData.paymentMethod = "UEN";
+        }
+
     }
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            formData.file = e.target.result.split(",")[1];
-            formData.filename = file.name;
-            formData.mimeType = file.type;
-            saveBooking();
-        };
-        reader.readAsDataURL(file);
-    } else {
-        formData.file = "";
-        saveBooking();
-    }
-}
+    async function submitForm() {
+        try {
+            showLoader();
+    
+            document.querySelectorAll(".error").forEach((element) => {
+                element.innerHTML = "";
+            });
 
-function saveBooking() {
-    showLoader();
-    formData.action = "saveRegistration";
-    fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(result => {
-        document.getElementById("paymentBlock").style.display = "none";
-        if (result.errors === undefined) {
-            document.getElementById("bookingId").innerHTML = result.bookingId;
-            document.getElementById("contactNumber2").innerHTML = result.contactNumber;
-            document.getElementById("confirmationBlock").style.display = "block";
-        } else {
-            let errorMessageHtml = '<ul style="color:red">';
-            for (let key in result.errors) {
-                errorMessageHtml += `<li>${result.errors[key]}</li>`;
+            let error = false;
+
+            if (!getElement("agree").checked) {
+                setText("e_agree", "Please read and agree to the disclaimer before submitting.");
+                error = true;
             }
-            errorMessageHtml += '</ul>';
-            document.getElementById("errorMessage").innerHTML = errorMessageHtml;
-            document.getElementById("contactNumber3").innerHTML = result.contactNumber;
-            document.getElementById("errorBlock").style.display = "block";
+
+            let file = null;
+            if (Number(formData.price?.finalPrice || 0) > 0) {
+                setHtml("e_paymentMethod", "");
+                setHtml("e_file", "");
+
+                const method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+                file = getElement("uploadFile")?.files[0] || null;
+
+                if (!method) {
+                    setHtml("e_paymentMethod", "Please select payment method");
+                    error = true;
+                }
+                if (!file) {
+                    setHtml("e_file", "Please select a file.");
+                    error = true;
+                }
+                if (file && file.size > 10 * 1024 * 1024) {
+                    setHtml("e_file", "Maximum file size is 10 MB.");
+                    error = true;
+                }
+            }
+
+            if (error) {
+                hideLoader();
+                return;
+            }
+
+            setStyle("paymentBlock", "none");
+
+            formData.file = "";
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = async function (event) {
+                    formData.file = event.target.result;
+                    formData.filename = file.name;
+                    formData.mimeType = file.type;
+                    await saveBooking();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                await saveBooking();
+            }
+            hideLoader();
+        } catch (err) {
+            console.error(err);
+            hideLoader();
+        }
+    }
+
+    async function saveBooking() {
+        showLoader();
+        formData = {
+            ...formData,
+            action: "saveRegistration"
+        };
+
+        const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(formData)
+        });
+        const result = await response.json();
+
+        if (result.errors !== undefined) {
+            let html = '<ul style="color:red">';
+            Object.values(result.errors).forEach((message) => {
+                html += `<li>${message}</li>`;
+            });
+            html += "</ul>";
+            setStyle("failureBlock", "block");
+            setHtml("failureMessage", html);
+        } else {
+            setHtml("bookingId", result.bookingId);
+            setStyle("confirmationBlock", "block");
         }
         hideLoader();
-    })
-    .catch(console.error);
-}
+    }
+
+    async function loadConfig() {
+        try {
+            showLoader();
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({action: "getConfig"})
+            });
+            const result = await response.json();
+
+            setHtml("eventName", result.eventDetails.name);
+            setHtml("eventDate", result.eventDetails.date);
+            setHtml("eventVenue", result.eventDetails.venue);
+
+            document.querySelector('option[value="standard"]').textContent = "Standard - $" + result.ticketPrices.standard + " per ticket";
+            document.querySelector('option[value="vip"]').textContent = "VIP - $" + result.ticketPrices.vip + " per ticket";
+
+            getElement("eventBanner").src = result.banner;
+            getElement("eventLogo").src = result.logo;
+            getElement("qrImage").src = result.qrImage;
+
+            setHtml("accountSection", buildDetailsHtml(result.accountDetails || []));
+            setHtml("uenSection", buildDetailsHtml(result.uenDetails || []));
+
+            document.querySelectorAll(".contactNumber").forEach(element => {
+                element.textContent = result.contactNumber;
+            });
+
+
+            hideLoader();
+        } catch (err) {
+           console.error(err);
+           hideLoader();
+        }
+
+    }
+
+    window.onload = async () => {
+        ["paymentBlock", "confirmationBlock", "failureBlock"].forEach((i) => {
+            setStyle(i, "none");
+        });
+        await loadConfig();
+    };
+
+    window.validateRegistration = validateRegistration;
+    window.changePaymentMethod = changePaymentMethod;
+    window.submitForm = submitForm;
+
+})();
