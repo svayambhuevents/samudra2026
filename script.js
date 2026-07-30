@@ -46,7 +46,7 @@ document.getElementById("validate_registration").addEventListener("click", async
     })
     .then(response => response.json())
     .then(result => {
-        if (Object.keys(result.errors).length > 0) {
+        if (result.errors !== undefined && Object.keys(result.errors).length > 0) {
             for (let key in result.errors) {
                 let el = document.getElementById("e_" + key);
                 if (el) el.innerHTML = result.errors[key];
