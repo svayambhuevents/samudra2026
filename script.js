@@ -157,6 +157,8 @@
         }
     }
 
+    getElement("nextButton").addEventListener("click", validateRegistration);
+
     function changePaymentMethod() {
         ["qrSection", "accountSection", "uenSection"].forEach((i) => {
             setStyle(i, "none");
@@ -225,7 +227,6 @@
                 reader.readAsDataURL(file);
             }
 
-
             const response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(state.formData)
@@ -252,6 +253,8 @@
             hideLoader();
         }
     }
+
+    getElement("submittButton").addEventListener("click", submitForm);
 
     window.onload = function () {
         showLoader();
