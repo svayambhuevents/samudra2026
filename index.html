@@ -20,7 +20,7 @@
 					<div class="card-body">
 						<div class="row align-items-center">
 							<div class="col-lg-2 col-md-3 col-12 text-center mb-3 mb-md-0"> <img id="eventLogo"
-									class="img-fluid logo" alt="Organization Logo"> </div>
+									class="img-fluid" alt="Organization Logo"> </div>
 							<div class="col-lg-10 col-md-9 col-12 text-center text-md-start">
 								<h2 id="eventName" class="fw-bold text-primary mb-1 event-name"></h2>
 								<p class="mb-0 text-muted">
@@ -39,7 +39,7 @@
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-person"></i></span>
 									<input id="full_name" type="text" class="form-control"
-										placeholder="Enter your full name">
+										placeholder="Enter your full name" value="Karthick Sundaram">
 								</div>
 								<div class="error" id="e_name"></div>
 							</div>
@@ -48,7 +48,7 @@
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-envelope"></i></span>
 									<input id="email" type="email" autocomplete="email" class="form-control"
-										placeholder="Enter your email">
+										placeholder="Enter your email" value="karthick.sundaram@hotmail.com">
 								</div>
 								<div class="error" id="e_email"></div>
 							</div>
@@ -59,7 +59,7 @@
 											class="bi bi-telephone"></i></span>
 									<input id="phone" type="tel" autocomplete="phone" class="form-control"
 										placeholder="Enter your phone number" inputmode="numeric" pattern="[0-9]*"
-										oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+										oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="12345678">
 								</div>
 								<div class="error" id="e_phone"></div>
 							</div>
@@ -68,7 +68,7 @@
 										class="required">*</span></label>
 								<select id="timing" class="form-select">
 									<option value="">-- Select Timing --</option>
-									<option value="T03:30 PM">Afternoon 03:30 PM</option>
+									<option value="T03:30 PM" selected>Afternoon 03:30 PM</option>
 									<option value="T07:30 PM">Evening 07:30 PM</option>
 								</select>
 								<div id="availableTickets" class="mt-2 fw-semibold text-success"></div>
@@ -79,7 +79,7 @@
 										class="required">*</span></label>
 								<select id="ticket" class="form-select">
 									<option value="">-- Select Ticket Type --</option>
-									<option value="standard">Standard</option>
+									<option value="standard" selected>Standard</option>
 									<option value="vip">VIP</option>
 								</select>
 								<div class="error" id="e_ticket"></div>
@@ -90,7 +90,7 @@
 								<div class="input-group"> <span class="input-group-text"><i
 											class="bi bi-ticket"></i></span>
 									<input id="pax" type="number" class="form-control"
-										placeholder="Enter number of tickets">
+										placeholder="Enter number of tickets" value="1">
 								</div>
 								<div class="error" id="e_pax"></div>
 							</div>
