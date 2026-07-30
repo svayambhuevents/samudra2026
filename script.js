@@ -87,6 +87,8 @@
                 body: JSON.stringify(state.formData)
             });
             const result = await response.json();
+            console.log(result);
+            
             if (result.errors !== undefined) {
                 Object.entries(result.errors).forEach(([key, value]) => {
                     setHtml("e_" + key, value);
@@ -237,6 +239,8 @@
                 body: JSON.stringify(state.formData)
             });
             const result = await response.json();
+            console.log(result);
+
             if (result.errors !== undefined) {
                 let html = '<ul style="color:red">';
                 Object.values(result.errors).forEach((message) => {
