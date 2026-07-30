@@ -216,7 +216,7 @@
 
             if (error) return;
 
-            setStyle("paymentBlock", "none")
+            setStyle("paymentBlock", "none");
 
             state.formData.file = "";
             if (file) {
