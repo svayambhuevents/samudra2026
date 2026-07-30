@@ -1,308 +1,184 @@
-(() => {
-    const state = {
-        formData: {},
-        config: {}
-    };
+const API_URL = "https://script.google.com/macros/s/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec";
 
-    const getElement = (id) => document.getElementById(id);
+let formData = {};
+let config = {};
+const pageContainer = document.getElementById("page");
+const loadingOverlay = document.getElementById("loadingOverlay");
 
-    const loadingOverlay = getElement("loadingOverlay");
+window.onload = () => {
+  document.getElementById("paymentBlock").style.display = "none";
+  document.getElementById("confirmationBlock").style.display = "none";
+};
 
-    const setText = (id, value) => {
-        const element = getElement(id);
-        if (element) {
-            element.textContent = value;
-        }
-    };
-    const setHtml = (id, value) => {
-        const element = getElement(id);
-        if (element) {
-            element.innerHTML = value;
-        }
-    };
-    const setStyle = (id, value) => {
-        const element = getElement(id);
-        if (element) {
-            element.style.display = value;
-        }
-    };
-    const buildDetailsHtml = (lines = []) => lines.join("<br>");
+function showLoader() {
+  loadingOverlay.classList.remove("d-none");
+  loadingOverlay.classList.add("show");
+}
 
-    const url = `https://script.google.com/macros/s/AKfycbw7phBMWubjsUUpwIwCqgc4eMOr8iZmTt4yLkqF2416Jo93C4tQoTq2LuFejWJlbba5/exec`;
-    const contactNumber = "+65 8186 3252";
-    setHtml("contactNumber1", contactNumber);
-    setHtml("contactNumber2", contactNumber);
-    setHtml("contactNumber3", contactNumber);
+function hideLoader() {
+    loadingOverlay.classList.remove("show");
+    loadingOverlay.classList.add("d-none");
+}
 
-    function showLoader() {
-        if (!loadingOverlay) return;
-        loadingOverlay.classList.remove("d-none");
-        loadingOverlay.classList.add("show");
-    }
+document.getElementById("validate_registration").addEventListener("click", async () => {
+    showLoader();
+    document.getElementById("paymentSection").style.display = "none";
+    document.getElementById("noPaymentSection").style.display = "none";
+    document.getElementById("qrSection").style.display = "none";
+    document.getElementById("accountSection").style.display = "none";
+    document.getElementById("uenSection").style.display = "none";
+    document.querySelectorAll(".error").forEach(e => e.innerHTML = "");
+    
+    formData.action = "validateRegistration";
+    formData.name = document.getElementById("full_name").value.trim();
+    formData.email = document.getElementById("email").value.trim();
+    formData.phone = document.getElementById("phone").value.trim();
+    formData.timing = document.getElementById("timing").value;
+    formData.ticket = document.getElementById("ticket").value;
+    formData.paxNum = Number(document.getElementById("paxNum").value);
+    formData.promo = document.getElementById("promo").value.trim();
+    document.querySelectorAll(".error").forEach(e => e.innerHTML = "");
 
-    function hideLoader() {
-        if (!loadingOverlay) return;
-        loadingOverlay.classList.remove("show");
-        loadingOverlay.classList.add("d-none");
-    }
-
-    function populateRegistrationFields() {
-        const registrationFields = {
-            full_name: state.formData.name || "",
-            email: state.formData.email || "",
-            phone: state.formData.phone || "",
-            timing: state.formData.timing || "",
-            ticket: state.formData.ticket || "",
-            pax: state.formData.pax || "",
-            promo: state.formData.promo || ""
-        };
-
-        Object.entries(registrationFields).forEach(([id, value]) => {
-            const element = getElement(id);
-            if (element) {
-                element.value = value;
+    fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (Object.keys(result.errors).length > 0) {
+            for (let key in result.errors) {
+                let el = document.getElementById("e_" + key);
+                if (el) el.innerHTML = result.errors[key];
             }
-        });
-    }
+            hideLoader();
+        } else {
+            formData.price = result.price;
+            document.getElementById("noOfPax").textContent = formData.paxNum;
+            document.getElementById("ticketPrice").textContent = "$" + formData.price.ticketPrice.toFixed(2);
+            document.getElementById("totalPrice").textContent = "$" + formData.price.totalPrice.toFixed(2);
+            document.getElementById("discountPrice").textContent = "$" + formData.price.discountPrice.toFixed(2);
+            document.getElementById("finalPrice").textContent = "$" + formData.price.finalPrice.toFixed(2);
+            document.getElementById("uploadFile").value = formData.file || "";
+            document.getElementById("paymentSection").style.display = "none";
+            document.getElementById("noPaymentSection").style.display = "none";
+            document.getElementById("qrSection").style.display = "none";
+            document.getElementById("accountSection").style.display = "none";
+            document.getElementById("uenSection").style.display = "none";
+            document.getElementById("contactNumber1").innerHTML = result.contactNumber;
 
-    async function validateRegistration() {
-        try {
-            showLoader();
-            state.formData = {
-                ...state.formData,
-                action: "validateRegistration",
-                name: getElement("full_name")?.value.trim() || "",
-                email: getElement("email")?.value.trim() || "",
-                phone: getElement("phone")?.value.trim() || "",
-                timing: getElement("timing")?.value || "",
-                ticket: getElement("ticket")?.value || "",
-                paxNum: getElement("paxNum")?.value || "",
-                promo: getElement("promo")?.value.trim() || ""
-            };
-        
-            document.querySelectorAll(".error").forEach((element) => {
-                element.innerHTML = "";
-            });
-
-            console.log(state.formData);
-            const response = await fetch(url, {
-                method: "POST",
-                body: JSON.stringify(state.formData)
-            });
-            const result = await response.json();
-            console.log(result);
-            
-            if (result.errors !== undefined) {
-                Object.entries(result.errors).forEach(([key, value]) => {
-                    setHtml("e_" + key, value);
-                });
-                hideLoader();
-                return;
-            }
-            state.formData.price = result.price;
-
-            ["paymentSection", "noPaymentSection", "qrSection", "accountSection", "uenSection"].forEach((i) => {
-                setStyle(i, "none");
-            });
-
-            setText("noOfPax", state.formData.paxNum);
-            setText("ticketPrice", "$" + state.formData.price.ticketPrice.toFixed(2));
-            setText("totalPrice", "$" + state.formData.price.totalPrice.toFixed(2));
-            setText("discountPrice", "$" + state.formData.price.discountPrice.toFixed(2));
-            setText("finalPrice", "$" + state.formData.price.finalPrice.toFixed(2));
-            getElement("uploadFile").value = state.formData.file || "";
-
-            const uploadFile = getElement("uploadFile");
-            if (uploadFile) {
-                uploadFile.value = state.formData.file || "";
-            }
-
-            if (Number(state.formData.price.finalPrice) === 0) {
-                setStyle("noPaymentSection", "block");
+            if (Number(formData.price.finalPrice) === 0) {
+                document.getElementById("noPaymentSection").style.display = "block";
             } else {
-                setStyle("paymentSection", "block");
+                document.getElementById("paymentSection").style.display = "block";
             }
-
-            setHtml("accountSection", buildDetailsHtml(state.config.accountDetails || []));
-            setHtml("uenSection", buildDetailsHtml(state.config.uenDetails || []));
-
-            const qrImage = getElement("qrImage");
-            if (qrImage) {
-                qrImage.src = state.config.qrImage || "";
+            
+            if (formData.paymentMethod === 'PayLah/PayNow') {
+                document.getElementById("paylah_paynow").checked = true;
+            } else if (formData.paymentMethod === 'Account Transfer') {
+                document.getElementById("account_transfer").checked = true;
+            } else if (formData.paymentMethod === 'UEN') {
+                document.getElementById("uen").checked = true;
             }
-
-            const paymentRadios = {
-                "PayLah/PayNow": getElement("paylah_paynow"),
-                "Account Transfer": getElement("account_transfer"),
-                UEN: getElement("uen")
-            };
-
-            Object.entries(paymentRadios).forEach(([method, element]) => {
-                if (element) {
-                    element.checked = state.formData.paymentMethod === method;
-                }
-            });
-
-            setHtml(
-                "disclaimer",
-                `Please do not attempt to rebook in the event of any booking issues.<br/> Instead, contact the organizer at ${contactNumber} for assistance.`
-            );
 
             changePaymentMethod();
 
-            setStyle("registerationBlock", "none");
-            setStyle("paymentBlock", "block");
-
             hideLoader();
-        } catch (err) {
-           console.error(err);
+
+            document.getElementById("registerationBlock").style.display = "none";
+            document.getElementById("paymentBlock").style.display = "block";
+        }
+    })
+    .catch(console.error);
+});
+
+function changePaymentMethod() {
+    document.getElementById("qrSection").style.display = "none";
+    document.getElementById("accountSection").style.display = "none";
+    document.getElementById("uenSection").style.display = "none";
+    formData.paymentMethod = 'No payment required';
+
+    const method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+    if (method === "PayLah/PayNow") {
+        document.getElementById("qrSection").style.display = "block";
+        formData.paymentMethod = 'PayLah/PayNow';
+    } else if (method === "Account Transfer") {
+        document.getElementById("accountSection").style.display = "block";
+        formData.paymentMethod = 'Account Transfer';
+    } else if (method === "UEN") {
+        document.getElementById("uenSection").style.display = "block";
+        formData.paymentMethod = 'UEN';
+    }
+}
+
+function submitForm() {
+    showLoader();
+  
+    let error = false;
+
+    if (!document.getElementById("agree").checked) {
+        e_agree.innerHTML = "Please read and agree to the disclaimer before submitting.";
+        error = true;
+    }
+
+    let file = null;
+    if (Number(formData.price.finalPrice) > 0) {
+        const e_paymentMethod = document.getElementById("e_paymentMethod");
+        const e_file = document.getElementById("e_file");
+
+        e_paymentMethod.innerHTML = "";
+        e_file.innerHTML = "";
+
+        let method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+        file = document.getElementById("uploadFile").files[0];
+
+        if (!method) {
+            e_paymentMethod.innerHTML = "Please select payment method";
+            error = true;
+        }
+        if (!file) {
+            e_file.innerHTML = "Please select a file.";
+            error = true;
+        }
+        if (file.size > 1 * 1024 * 1024) {
+            e_file.innerHTML = "Maximum file size is 10 MB.";
+            error = true;
         }
     }
 
-    getElement("nextButton").addEventListener("click", validateRegistration);
-
-    function changePaymentMethod() {
-        ["qrSection", "accountSection", "uenSection"].forEach((i) => {
-            setStyle(i, "none");
-        });
-
-        state.formData.paymentMethod = "No payment required";
-        const method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-        console.log(state.formData.paymentMethod);
-        console.log(method);
-
-        if (method === "PayLah/PayNow") {
-            setStyle("qrSection", "block");
-            state.formData.paymentMethod = "PayLah/PayNow";
-        } else if (method === "Account Transfer") {
-            setStyle("accountSection", "block");
-            state.formData.paymentMethod = "Account Transfer";
-        } else if (method === "UEN") {
-            setStyle("uenSection", "block");
-            state.formData.paymentMethod = "UEN";
-        }
-        console.log(state.formData.paymentMethod);
-
-    }
-
-    async function submitForm() {
-        try {
-            showLoader();
-    
-            let error = false;
-
-            if (!getElement("agree").checked) {
-                setText("e_agree", "Please read and agree to the disclaimer before submitting.");
-                error = true;
-            }
-
-            let file = null;
-            if (Number(state.formData.price?.finalPrice || 0) > 0) {
-                setHtml("e_paymentMethod", "");
-                setHtml("e_file", "");
-
-                const method = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-                file = getElement("uploadFile")?.files[0] || null;
-
-                if (!method) {
-                    setHtml("e_paymentMethod", "Please select payment method");
-                    error = true;
-                }
-                if (!file) {
-                    setHtml("e_file", "Please select a file.");
-                    error = true;
-                }
-                if (file && file.size > 10 * 1024 * 1024) {
-                    setHtml("e_file", "Maximum file size is 10 MB.");
-                    error = true;
-                }
-            }
-
-            if (error) return;
-
-            setStyle("paymentBlock", "none");
-
-            state.formData.file = "";
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    state.formData.file = event.target.result.split(",")[1];
-                    state.formData.filename = file.name;
-                    state.formData.mimeType = file.type;
-                    state.formData = {
-                        ...state.formData,
-                        action: "saveRegistration"
-                    }
-
-                    console.log(state.formData);
-                    const response = fetch(url, {
-                        method: "POST",
-                        body: JSON.stringify(state.formData)
-                    });
-                    const result = response.json();
-                    console.log(result);
-
-                    if (result.errors !== undefined) {
-                        let html = '<ul style="color:red">';
-                        Object.values(result.errors).forEach((message) => {
-                            html += `<li>${message}</li>`;
-                        });
-                        html += "</ul>";
-                        setStyle("failureBlock", "block");
-                        setHtml("failureMessage", html);
-                    } else {
-                        setHtml("bookingId", result.bookingId);
-                        setStyle("confirmationBlock", "block");
-                    }
-                };
-                reader.readAsDataURL(file);
-            } else {
-                state.formData = {
-                    ...state.formData,
-                    action: "saveRegistration"
-                }
-
-                console.log(state.formData);
-                const response = fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify(state.formData)
-                });
-                const result = response.json();
-                console.log(result);
-
-                if (result.errors !== undefined) {
-                    let html = '<ul style="color:red">';
-                    Object.values(result.errors).forEach((message) => {
-                        html += `<li>${message}</li>`;
-                    });
-                    html += "</ul>";
-                    setStyle("failureBlock", "block");
-                    setHtml("failureMessage", html);
-                } else {
-                    setHtml("bookingId", result.bookingId);
-                    setStyle("confirmationBlock", "block");
-                }
-            }
-            hideLoader();
-        } catch (err) {
-           console.error(err);
-            hideLoader();
-        }
-    }
-
-    getElement("submitButton").addEventListener("click", submitForm);
-
-    function saveBooking() {
-
-    }
-
-    window.onload = function () {
-        showLoader();
-        ["paymentBlock", "confirmationBlock", "failureBlock"].forEach((i) => {
-            setStyle(i, "none");
-        });
+    if (error) {
         hideLoader();
-    };
+        return;
+    }
 
-    window.changePaymentMethod = changePaymentMethod;
-})();
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            formData.file = e.target.result.split(",")[1];
+            formData.filename = file.name;
+            formData.mimeType = file.type;
+            saveBooking();
+        };
+        reader.readAsDataURL(file);
+    } else {
+        formData.file = "";
+        saveBooking();
+    }
+}
+
+function saveBooking() {
+    showLoader();
+    formData.action = "saveRegistration";
+    fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(result => {
+        document.getElementById("bookingId").innerHTML = result.bookingId;
+        document.getElementById("contactNumber2").innerHTML = result.contactNumber;
+        document.getElementById("paymentBlock").style.display = "none";
+        document.getElementById("confirmationBlock").style.display = "block";
+        hideLoader();
+    })
+    .catch(console.error);
+}
