@@ -108,7 +108,7 @@
             setText("discountPrice", "$" + state.formData.price.discountPrice.toFixed(2));
             setText("finalPrice", "$" + state.formData.price.finalPrice.toFixed(2));
             getElement("uploadFile").value = state.formData.file || "";
-            setText("contactNumber1", contactNumber);
+            setHtml("contactNumber1", contactNumber);
 
             const uploadFile = getElement("uploadFile");
             if (uploadFile) {
@@ -246,13 +246,13 @@
                     html += `<li>${message}</li>`;
                 });
                 html += "</ul>";
-                setText("contactNumber2", contactNumber);
+                setHtml("contactNumber2", contactNumber);
                 setStyle("failureBlock", "block");
                 setHtml("failureMessage", html);
             } else {
                 setStyle("paymentBlock", "none")
                 setHtml("bookingId", result.bookingId);
-                setText("contactNumber3", contactNumber);
+                setHtml("contactNumber3", contactNumber);
                 setStyle("confirmationBlock", "block");
             }
             hideLoader();
