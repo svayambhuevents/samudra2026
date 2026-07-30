@@ -174,10 +174,21 @@ function saveBooking() {
     })
     .then(response => response.json())
     .then(result => {
-        document.getElementById("bookingId").innerHTML = result.bookingId;
-        document.getElementById("contactNumber2").innerHTML = result.contactNumber;
         document.getElementById("paymentBlock").style.display = "none";
-        document.getElementById("confirmationBlock").style.display = "block";
+        if (result.errors === undefined) {
+            document.getElementById("bookingId").innerHTML = result.bookingId;
+            document.getElementById("contactNumber2").innerHTML = result.contactNumber;
+            document.getElementById("confirmationBlock").style.display = "block";
+        } else {
+            let errorMessageHtml = '<ul style="color:red">';
+            for (let key in result.errors) {
+              errorMessageHtml += `<li>${result.errors[key]}</li>`;
+            }
+            errorMessageHtml += '</ul>';
+            document.getElementById("errorMessage").innerHTML = errorMessageHtml;
+            document.getElementById("contactNumber3").innerHTML = result.contactNumber;
+            document.getElementById("errorBlock").style.display = "block";
+        }
         hideLoader();
     })
     .catch(console.error);
