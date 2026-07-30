@@ -10,10 +10,6 @@ body {
     border-radius: 20px;
 }
 
-.card-header {
-    border: none;
-}
-
 .form-control,
 .form-select {
     border-radius: 10px;
@@ -43,10 +39,6 @@ body {
 
 .btn:hover {
     transform: translateY(-2px);
-}
-
-textarea {
-    resize: none;
 }
 
 @media (max-width:768px) {
@@ -95,12 +87,14 @@ textarea {
     font-weight: 500;
 }
 
-.bg-success-subtle {
+.bg-success-subtle,
+.bg-danger-subtle {
     padding: 25px;
 }
 
-.brand-color {
+.event-name {
     color: #620000 !important;
+    padding-bottom: 8px;
 }
 
 .custom-radio {
@@ -113,4 +107,8 @@ textarea {
 
 .custom-radio:checked {
     background-size: 1rem 1rem;
+}
+
+.disclaimer {
+    margin: 25px 0 10px 0;
 }
