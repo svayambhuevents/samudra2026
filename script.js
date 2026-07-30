@@ -225,36 +225,13 @@
                     state.formData.file = event.target.result;
                     state.formData.filename = file.name;
                     state.formData.mimeType = file.type;
+                    saveBooking();
                 };
                 reader.readAsDataURL(file);
-            }
-
-            state.formData = {
-                ...state.formData,
-                action: "saveRegistration"
-            }
-
-            console.log(state.formData);
-            const response = await fetch(url, {
-                method: "POST",
-                body: JSON.stringify(state.formData)
-            });
-            const result = await response.json();
-            console.log(result);
-
-            if (result.errors !== undefined) {
-                let html = '<ul style="color:red">';
-                Object.values(result.errors).forEach((message) => {
-                    html += `<li>${message}</li>`;
-                });
-                html += "</ul>";
-                setStyle("failureBlock", "block");
-                setHtml("failureMessage", html);
             } else {
-                setStyle("paymentBlock", "none")
-                setHtml("bookingId", result.bookingId);
-                setStyle("confirmationBlock", "block");
+                saveBooking();
             }
+
             hideLoader();
         } catch (err) {
            console.error(err);
@@ -263,6 +240,35 @@
     }
 
     getElement("submitButton").addEventListener("click", submitForm);
+
+    function saveBooking() {
+        state.formData = {
+            ...state.formData,
+            action: "saveRegistration"
+        }
+
+        console.log(state.formData);
+        const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(state.formData)
+        });
+        const result = await response.json();
+        console.log(result);
+
+        if (result.errors !== undefined) {
+            let html = '<ul style="color:red">';
+            Object.values(result.errors).forEach((message) => {
+                html += `<li>${message}</li>`;
+            });
+            html += "</ul>";
+            setStyle("failureBlock", "block");
+            setHtml("failureMessage", html);
+        } else {
+            setStyle("paymentBlock", "none")
+            setHtml("bookingId", result.bookingId);
+            setStyle("confirmationBlock", "block");
+        }
+    }
 
     window.onload = function () {
         showLoader();
