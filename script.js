@@ -94,8 +94,10 @@
                     setHtml("e_" + key, value);
                 });
                 hideLoader();
+                console.log('am here 1');
                 return;
             }
+            console.log('am here 1');
             state.formData.price = result.price;
 
             ["paymentSection", "noPaymentSection", "qrSection", "accountSection", "uenSection"].forEach((i) => {
@@ -121,10 +123,10 @@
                 uploadFile.value = state.formData.file || "";
             }
 
-            if (Number(state.formData.price.finalPrice) > 0) {
-                setStyle("paymentSection", "block");
-            } else {
+            if (Number(state.formData.price.finalPrice) === 0) {
                 setStyle("noPaymentSection", "block");
+            } else {
+                setStyle("paymentSection", "block");
             }
 
             setHtml("accountSection", buildDetailsHtml(state.config.accountDetails || []));
